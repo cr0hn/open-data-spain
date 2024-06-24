@@ -1,0 +1,51 @@
+{% extends 'dashboard/_base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+    <div class="container-fluid">
+
+        <div class="d-flex align-items-baseline justify-content-between">
+
+            <!-- Title -->
+            <h1 class="h2">
+                API Keys
+            </h1>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard-home:home' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">API Keys</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col d-flex">
+
+                <!-- Card -->
+                <div class="card border-0 flex-fill w-100" data-list="{&quot;valueNames&quot;: [&quot;name&quot;, {&quot;name&quot;: &quot;key&quot;, &quot;attr&quot;: &quot;data-key&quot;}, {&quot;name&quot;: &quot;status&quot;, &quot;attr&quot;: &quot;data-status&quot;}, {&quot;name&quot;: &quot;created&quot;, &quot;attr&quot;: &quot;data-created&quot;}], &quot;page&quot;: 10}" id="keysTable">
+                    <div class="card-header border-0">
+
+                        <form class="form-horizontal" id="create-api-key-form" method="post">
+                            {% csrf_token %}
+
+                            <div id="div_id_name" class="mb-3 row">
+                                <label for="id_name" class="col-form-label col-lg-2 requiredField">Nombre<span class="asteriskField">*</span> </label>
+                                <div class="col-lg-10">
+                                    {{ form.name }}
+                                    {{ form.name.errors }}
+                                    <div id="id_name_helptext" class="form-text">El nombre de la clave</div>
+                                </div>
+                            </div>
+                            <input type="submit" name="submit" value="Crear API Key" class="btn btn-primary btn btn-primary" id="submit-id-submit">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

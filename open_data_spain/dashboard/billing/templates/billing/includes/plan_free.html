@@ -1,0 +1,31 @@
+{% load billing_ui %}
+{% load billing_plans %}
+
+{% free_plan as plan_features %}
+
+<ul class="list-unstyled mb-7">
+    <li class="mb-3">
+        {% check_image plan_name "free" %}
+        {{ plan_features.max_requests_per_month }} peticiones al mes
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "free" %}
+        {{ plan_features.max_requests_per_minute }} peticiones por minuto
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "free" %}
+        {{ plan_features.max_concurrent_requests }} conexión concurrente
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "free" %}
+        {{ plan_features.max_api_keys }} API Key
+    </li>
+    <li class="opacity-40 mb-3">
+        {% cross_image plan_name "free" %}
+        Dashboard avanzado
+    </li>
+    <li class="opacity-40">
+        {% cross_image plan_name "free" %}
+        Sin soporte
+    </li>
+</ul>

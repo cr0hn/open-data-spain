@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es" data-theme="light"  data-sidebar-behaviour="fixed" data-navigation-color="inverted" data-is-fluid="true">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="Webinning" name="author">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/theme.bundle.css' %}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" media="print" onload="this.onload=null;this.removeAttribute('media');" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap">
+
+    <!-- no-JS fallback -->
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap">
+    </noscript>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'dashboard/assets/favicon/favicon.ico' %}" sizes="any">
+
+
+    <!-- Page Title -->
+    <title>Open Data Spain</title>
+</head>
+
+<body {% block body_class %}{% endblock %}>
+
+{% block master %}{% endblock %}
+
+<!-- JAVASCRIPT-->
+<script src="https://kit.fontawesome.com/f063f5a56d.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Theme JS -->
+<script src="{% static "assets/js/theme.bundle.js" %}"></script>
+<script src="{% static "assets/js/ods.js" %}"></script>
+{% block javascript %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% load billing_plans %}
+{% load billing_ui %}
+
+{% enterprise_plan as plan_features %}
+
+<ul class="list-unstyled mb-7">
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        Ilimitadas peticiones al mes
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        {{ plan_features.max_requests_per_minute }} peticiones por minuto
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        {{ plan_features.max_concurrent_requests }} conexión concurrentes
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        {{ plan_features.max_api_keys }} API Keys
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        Dashboard avanzado
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "premium" %}
+        Soporte prioritario y personalizado
+    </li>
+</ul>

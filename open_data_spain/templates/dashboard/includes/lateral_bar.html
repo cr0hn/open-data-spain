@@ -1,0 +1,26 @@
+<div class="collapse navbar-collapse" id="sidenavCollapse">
+
+    <!-- Navigation -->
+    <ul class="navbar-nav mb-lg-7">
+        <li class="nav-item dropdown mb-3 fs-4">
+            <a href="{% url 'dashboard-home:home' %}" class="nav-link {% if "home/" in request.path %}active{% endif %}">
+                <svg viewBox="0 0 24 24" class="nav-link-icon" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M3.753,13.944v8.25h6v-6a1.5,1.5,0,0,1,1.5-1.5h1.5a1.5,1.5,0,0,1,1.5,1.5v6h6v-8.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M.753,12.444,10.942,2.255a1.5,1.5,0,0,1,2.122,0L23.253,12.444" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg>
+                <span>Inicio</span>
+            </a>
+        </li>
+        <li class="nav-item dropdown mb-3">
+            <a href="{% url 'dashboard-api-keys:apikey-list' %}" class="nav-link fs-4 {% if "api-keys/" in request.path %}active{% endif %}">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="nav-link-icon" height="18" width="18"><path fill="none" d="M0 0h24v24H0V0Z"></path><path fill="currentColor" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4Zm5.2 0l4.6-4.6 -4.6-4.6L16 6l6 6 -6 6 -1.4-1.4Z"></path></svg>
+                <span>API Keys</span>
+            </a>
+        </li>
+        <li class="nav-item dropdown mb-3 fs-4">
+            <a href="{% url 'dashboard-billing:details' %}" class="nav-link fs-4 {% if "billing/" in request.path %}active{% endif %}">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="nav-link-icon" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><g><path d="M7.5 8.25c0 4.55 3.69 8.25 8.25 8.25 4.55 0 8.25-3.7 8.25-8.25C24 3.69 20.3 0 15.75 0 11.19 0 7.5 3.69 7.5 8.25ZM9 8.24c0-3.73 3.02-6.75 6.75-6.75 3.72 0 6.75 3.02 6.75 6.75 0 3.72-3.03 6.75-6.75 6.75 -3.73 0-6.75-3.03-6.75-6.75Z"/><path d="M5.62 14.09c0 .85.52 1.62 1.31 1.94l2.06.82c.3.12.44.46.32.76 -.1.22-.31.37-.55.37l-2.04-.01c-.42 0-.75.33-.75.75 0 .41.33.75.75.75h2.03c.85-.01 1.62-.52 1.93-1.32 .43-1.08-.09-2.3-1.16-2.73l-2.07-.83c-.23-.09-.38-.31-.38-.55 -.01-.42-.34-.75-.76-.75s-.75.33-.75.75Z"/><path d="M9 20.25v-1.5c0-.42-.34-.75-.75-.75 -.42 0-.75.33-.75.75v1.5c0 .41.33.75.75.75 .41 0 .75-.34.75-.75Z"/><path d="M4.98 8.17C.79 9.96-1.14 14.82.65 19c1.79 4.18 6.65 6.11 10.83 4.32 1.94-.84 3.48-2.39 4.32-4.33 .16-.39-.02-.83-.4-.99 -.39-.17-.83.01-.99.39 -.69 1.58-1.95 2.85-3.54 3.53 -3.43 1.47-7.4-.11-8.87-3.54 -1.48-3.43.1-7.4 3.53-8.87 .38-.17.55-.61.39-.99 -.17-.39-.61-.56-.99-.4Z"/><path d="M17.25 4.5h-2.04c-1.16 0-2.1.93-2.1 2.09 0 .85.51 1.62 1.31 1.93l2.06.82c.3.12.44.46.32.76 -.1.22-.31.37-.55.37l-2.04-.01c-.42 0-.75.33-.75.75 0 .41.33.75.75.75h2.03c.85-.01 1.62-.52 1.93-1.32 .43-1.08-.09-2.3-1.16-2.73l-2.07-.83c-.23-.09-.37-.31-.37-.55 -.01-.33.26-.6.59-.6h2.03c.41 0 .75-.34.75-.75 0-.42-.34-.75-.75-.75Z"/><path d="M16.5 5.25v-1.5c0-.42-.34-.75-.75-.75 -.42 0-.75.33-.75.75v1.5c0 .41.33.75.75.75 .41 0 .75-.34.75-.75Z"/><path d="M16.5 12.75v-1.5c0-.42-.34-.75-.75-.75 -.42 0-.75.33-.75.75v1.5c0 .41.33.75.75.75 .41 0 .75-.34.75-.75Z"/></g></svg>
+                <span>Facturación</span>
+            </a>
+        </li>
+    </ul>
+    <!-- End of Navigation -->
+
+</div>

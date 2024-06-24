@@ -1,0 +1,40 @@
+{% load socialaccount %}
+{% load static %}
+
+<header class="container-fluid d-flex py-6 mb-4">
+
+    <!-- Top buttons -->
+    <div class="d-flex align-items-center ms-auto me-n1 me-lg-n2">
+
+        <!-- Separator -->
+        <div class="vr bg-gray-700 mx-2 mx-lg-3"></div>
+
+        <!-- Dropdown -->
+        <div class="dropdown">
+            <a href="javascript: void(0);" class="dropdown-toggle no-arrow d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm mx-1 mx-lg-2 w-40px h-40px" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false" data-bs-offset="0,0">
+                <div class="avatar avatar-circle avatar-sm avatar-online">
+
+                    <img src="{{ user.avatar_url }}" alt="User profile" class="avatar-img" width="40" height="40">
+                </div>
+            </a>
+
+            <div class="dropdown-menu">
+                <div class="dropdown-item-text">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-sm avatar-circle">
+                            <img src="{{ user.avatar_url }}" alt="User picture" class="avatar-img" width="40" height="40">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="mb-0">{{ user.first_name }}</h4>
+                            <p class="card-text">{{ user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="dropdown-divider">
+
+                <a class="dropdown-item" href="{% url 'dashboard-login:logout' %}">Salir</a>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,50 @@
+{% extends 'dashboard/_master.html' %}
+
+{% load static %}
+{% load socialaccount %}
+
+{% block body_class %}class="d-flex align-items-center bg-light-green"{% endblock    %}
+
+{% block master %}
+    <main class="container-fluid">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-7 col-lg-6 px-lg-4 px-xl-8 d-flex flex-column vh-100 py-6">
+
+                <!-- Brand -->
+                <a class="navbar-brand mb-auto" href="./index.html">
+                    <img src="{% static 'img/logo-with-headline-transparent.png' %}" class="navbar-brand-img" width="250px">
+                </a>
+
+                <div>
+                    <!-- Title -->
+                    <h1 class="mb-2">
+                        Login
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-secondary">
+                        Puedes iniciar sesión con tu correo tu cuenta de google o GitHub
+                    </p>
+                    <div class="row">
+                        <div class="col-auto">
+                            <!-- Button -->
+                            <a href="{% provider_login_url "github" process="login" %}" class="btn btn-white mb-2">
+                                <i class="fa-brands fa-github me-2"></i>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                </div>
+
+            </div>
+
+            <div class="col-md-5 col-lg-6 d-none d-lg-block">
+
+                <!-- Image -->
+                <div class="bg-size-cover bg-position-center bg-repeat-no-repeat overlay overlay-dark overlay-50 vh-100 me-n4" style="background-image: url({% static 'dashboard/assets/images/covers/sign-in-cover.jpeg' %});"></div>
+            </div>
+        </div> <!-- / .row -->
+    </main> <!-- / main -->
+{% endblock %}

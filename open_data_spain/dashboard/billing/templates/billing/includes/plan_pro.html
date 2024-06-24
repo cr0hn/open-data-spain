@@ -1,0 +1,30 @@
+{% load billing_ui %}
+{% load billing_plans %}
+
+{% professional_plan as plan_features %}
+<ul class="list-unstyled mb-7">
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        {{ plan_features.max_requests_per_month  }} peticiones al mes
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        {{ plan_features.max_requests_per_minute }} peticiones por minuto
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        {{ plan_features.max_concurrent_requests }} conexión concurrentes
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        {{ plan_features.max_api_keys }} API Keys
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        Dashboard avanzado
+    </li>
+    <li class="mb-3">
+        {% check_image plan_name "professional" %}
+        Soporte por email
+    </li>
+</ul>

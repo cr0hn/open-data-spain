@@ -1,0 +1,1 @@
+from .procesar_bienes import procesar_tab_bienes

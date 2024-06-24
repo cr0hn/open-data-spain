@@ -1,0 +1,39 @@
+{% extends 'dashboard/_master.html' %}
+{% load static %}
+{% block master %}
+
+    <!-- NAVIGATION -->
+    <nav id="mainNavbar" class="navbar navbar-vertical navbar-expand-lg scrollbar bg-dark navbar-dark pt-4">
+
+        <!-- Theme configuration (navbar) -->
+
+        <div class="container-fluid">
+
+            <!-- Brand -->
+            <a class="navbar-brand mb-4" href="{% url "dashboard-home:home" %}">
+                <img src="{% static "img/logo-300px.png" %}" class="navbar-brand-img logo-dark logo-large rounded-2 mx-auto d-block" alt="Open Data Spain Logo" width="80px" height="80px">
+            </a>
+
+            <!-- Navbar toggler -->
+            <a href="javascript: void(0);" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </a>
+
+            <!-- Collapse -->
+            {% include 'dashboard/includes/lateral_bar.html' %}
+            <!-- End of Collapse -->
+        </div>
+    </nav>
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HEADER -->
+        {% include 'dashboard/includes/header.html' %}
+
+        {% block main %}{% endblock %}
+
+        <!-- Footer-->
+        {% include 'dashboard/includes/footer.html' %}
+
+    </main> <!-- / main -->
+{% endblock %}

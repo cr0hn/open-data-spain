@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: open_data_spain
+    ports:
+      - "6432:5432"
+
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "7379:6379"
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONDODB_DATABASE: open_data_spain
+    ports:
+      - "31291:27017"
+
+  minio:
+    image: minio/minio:latest
+    environment:
+      MINIO_ROOT_USER: AKWL6Lr4fN7FdWa2SOPK
+      MINIO_ROOT_PASSWORD: OvSlULQnmz4ivYpFv5MewZTje1hqVI6WovAnnXkH
+    command: server /data --console-address ":9090"
+    ports:
+      - "9000:9000"
+      - "9090:9090"

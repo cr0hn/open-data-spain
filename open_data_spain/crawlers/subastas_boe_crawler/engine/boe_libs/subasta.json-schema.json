@@ -1,0 +1,166 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Subasta",
+  "type": "object",
+  "properties": {
+    "gestora": {
+      "type": ["object", "null"],
+      "properties": {
+        "codigo": {"type": "string"},
+        "descripcion": {"type": "string"},
+        "fax": {"type": ["string", "null"]},
+        "telefono": {"type": ["string", "null"]},
+        "email": {"type": ["string", "null"]}
+      },
+      "required": ["codigo", "descripcion"]
+    },
+    "acreedor": {
+      "type": ["object", "null"],
+      "properties": {
+        "nif": {"type": "string"},
+        "nombre": {"type": "string"},
+        "tipo_acreedor": {"type": "string"},
+        "banco": {"type": ["string", "null"]},
+        "direccion": {"type": ["string", "null"]},
+        "codigo_postal": {"type": ["string", "null"]},
+        "municipio": {"type": ["string", "null"]},
+        "provincia": {"type": ["string", "null"]}
+      },
+      "required": ["nombre", "tipo_acreedor"]
+    },
+    "subasta": {
+      "type": "object",
+      "properties": {
+        "identificador": {"type": "string"},
+        "url": {"type": "string"},
+        "boe": {"type": "string"},
+        "origen": {"type": "string"},
+        "tipo_subasta": {"type": "string"},
+        "tipo_subasta_raw": {"type": "string"},
+        "tipo_fecha": {"type": "string"},
+        "fecha_inicio": {"type": "string"},
+        "fecha_inicio_raw": {"type": "string"},
+        "fecha_fin": {"type": "string"},
+        "fecha_fin_raw": {"type": "string"},
+        "cantidad_reclamada": {"type": "number"},
+        "cantidad_reclamada_raw": {"type": "string"},
+        "valor_subasta": {"type": "number"},
+        "valor_subasta_raw": {"type": "string"},
+        "valor_subasta_tipo": {"type": "string"},
+        "tasacion": {"type": "number"},
+        "tasacion_raw": {"type": "string"},
+        "tasacion_tipo": {"type": "string"},
+        "puja_minima": {"type": "number"},
+        "puja_minima_raw": {"type": "string"},
+        "puja_minima_tipo": {"type": "string"},
+        "deposito": {"type": "number"},
+        "deposito_raw": {"type": "string"},
+        "deposito_tipo": {"type": "string"},
+        "tramos_pujas": {"type": "number"},
+        "tramos_pujas_raw": {"type": "string"},
+        "tramos_pujas_tipo": {"type": "string"},
+        "total_tasacion": {"type": "number"},
+        "total_puja_minima": {"type": "number"},
+        "total_deposito": {"type": "number"},
+        "total_valor_subasta": {"type": "number"}
+      },
+      "required": [
+        "identificador", "url", "boe", "origen", "tipo_subasta", "tipo_subasta_raw",
+        "tipo_fecha", "fecha_inicio", "fecha_inicio_raw", "fecha_fin", "fecha_fin_raw",
+        "cantidad_reclamada", "cantidad_reclamada_raw", "valor_subasta", "valor_subasta_raw",
+        "valor_subasta_tipo", "tasacion", "tasacion_raw", "tasacion_tipo", "puja_minima",
+        "puja_minima_raw", "puja_minima_tipo", "deposito", "deposito_raw", "deposito_tipo",
+        "tramos_pujas", "tramos_pujas_raw", "tramos_pujas_tipo", "total_tasacion",
+        "total_puja_minima", "total_deposito", "total_valor_subasta"
+      ]
+    },
+    "lotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "nombre": {"type": "string"},
+          "descripcion_lote": {"type": "string"},
+          "subasta_info": {
+            "type": ["object", "null"],
+            "properties": {
+              "cantidad_reclamada": {"type": "number"},
+              "cantidad_reclamada_raw": {"type": "string"},
+              "valor_subasta": {"type": "number"},
+              "valor_subasta_raw": {"type": "string"},
+              "valor_subasta_tipo": {"type": "string"},
+              "tasacion": {"type": "number"},
+              "tasacion_raw": {"type": "string"},
+              "tasacion_tipo": {"type": "string"},
+              "puja_minima": {"type": "number"},
+              "puja_minima_raw": {"type": "string"},
+              "puja_minima_tipo": {"type": "string"},
+              "deposito": {"type": "number"},
+              "deposito_raw": {"type": "string"},
+              "deposito_tipo": {"type": "string"},
+              "tramos_pujas": {"type": "number"},
+              "tramos_pujas_raw": {"type": "string"},
+              "tramos_pujas_tipo": {"type": "string"}
+            }
+          },
+          "bienes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "titulo": {"type": "string"},
+                "descripcion": {"type": "string"},
+                "tipo_construccion": {"type": "string"},
+                "tipo_propiedad": {"type": "string"},
+                "titulo_juridico": {"type": "string"},
+                "titulo_juridico_raw": {"type": "string"},
+                "situacion_posesoria": {"type": "string"},
+                "situacion_posesoria_raw": {"type": "string"},
+                "visitable": {"type": "boolean"},
+                "visitable_raw": {"type": "string"},
+                "cargas": {"type": "string"},
+                "cargas_raw": {"type": "string"},
+                "cargas_numero": {"type": "integer"},
+                "vivienda_habitual": {"type": "boolean"},
+                "vivienda_habitual_raw": {"type": "string"},
+                "informacion_adicional": {"type": "string"},
+                "informacion_adicional_raw": {"type": "string"},
+                "idufir": {"type": "string"},
+                "idufir_raw": {"type": "string"},
+                "idufir_origen": {"type": "string"},
+                "cru": {"type": "string"},
+                "cru_raw": {"type": "string"},
+                "cru_origen": {"type": "string"},
+                "inscripcion_registral": {"type": "string"},
+                "inscripcion_registral_raw": {"type": "string"},
+                "referencia_catastral": {"type": "string"},
+                "referencia_catastral_raw": {"type": "string"},
+                "referencia_catastral_origen": {"type": "string"},
+                "codigo_postal": {"type": "string"},
+                "codigo_postal_raw": {"type": "string"},
+                "calle": {"type": "string"},
+                "calle_raw": {"type": "string"},
+                "provincia_code": {"type": ["string", "null"]},
+                "provincia_name": {"type": ["string", "null"]},
+                "provincia_slug": {"type": ["string", "null"]},
+                "municipio_code": {"type": ["string", "null"]},
+                "municipio_name": {"type": ["string", "null"]},
+                "municipio_slug": {"type": ["string", "null"]},
+                "comunidad_autonoma_code": {"type": ["string", "null"]},
+                "comunidad_autonoma_name": {"type": ["string", "null"]},
+                "comunidad_autonoma_slug": {"type": ["string", "null"]}
+              },
+              "required": [
+                "id", "titulo", "tipo_construccion", "tipo_propiedad"
+              ]
+            }
+          }
+        },
+        "required": ["id", "nombre", "descripcion_lote"]
+      }
+    }
+  },
+  "required": ["subasta", "gestora", "acreedor", "lotes"]
+}

@@ -1,0 +1,1301 @@
+openapi: 3.0.3
+info:
+  title: Open Data Spain API
+  version: v1.0
+  x-logo:
+    url: logo-with-headline.png
+    altText: Open Data Spain Logo
+    href: https://open-data-spain.io/
+  description: "\n## Open Data Spain API\n\n### Autenticación\n\nPara poder utilizar\
+    \ la API es necesario obtener un token de acceso. \n\nEn este momento la API está\
+    \ en fase de desarrollo y los tokens son concedidos manualmente. Si estás interesado\
+    \ en utilizar la API, por favor, ponte en contacto con nosotros en [contact](mailto:dev@open-data-spain.io)\
+    \ y dejanos tu nombre, email y una breve descripción de tu proyecto.\n\n### Nuevas\
+    \ funcionalidades\n\nLa API está en constante desarrollo y se irán añadiendo nuevas\
+    \ funcionalidades. \n\nSe ha creado un tablón público para **solicitar** y **votar\
+    \ nuevas funcionalidades**. Puedes acceder a él en:\n\n[https://open-data-spain.canny.io/](https://open-data-spain.canny.io/new-features)\
+    \ \n\n### Documentación\n\nLa documentación de la API está disponible en [https://open-data-spain.io/docs/](https://open-data-spain.io/docs/).\n\
+    \n### Ejemplos\n\n#### Obtener la lista de comunidades autónomas\n\n```bash\n\
+    curl -H 'Token: <token>' https://open-data-spain.io/api/v1.0/geo-politico/comunidades-autonomas/\n\
+    ```\n\n#### Obtener la lista de provincias de una comunidad autónoma\n\n```bash\n\
+    curl -H 'Token: <token>' https://open-data-spain.io/api/v1.0/geo-politico/provincias/andalucia/\n\
+    ```\n\n#### Obtener la lista de municipios de una provincia\n\n```bash\ncurl -H\
+    \ 'Token: <token>' https://open-data-spain.io/api/v1.0/geo-politico/municipios/sevilla/\n\
+    ```\n\n#### Obtener las ultimas subastas públicas del BOE\n\n```bash\ncurl -H\
+    \ 'Token: <token>' https://open-data-spain.io/api/v1.0/subastas-publicas/boe/hoy/\n\
+    ```\n\n"
+  contact:
+    name: Open Data Spain
+    url: https://open-data-spain.io
+    email: dev@open-data-spain.io
+  license:
+    name: BSD 3 Clause License
+    url: https://opensource.org/license/bsd-3-clause/
+paths:
+  /api/v1.0/geo-politico/comunidades-autonomas/:
+    get:
+      operationId: listar comunidades autónomas
+      description: Obtiene la lista de comunidades autónomas
+      tags:
+      - geo-politico
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: string
+                    nombre:
+                      type: string
+                    nombre_slug:
+                      type: string
+                    nombre_alternativo:
+                      type: string
+                    nombre_alternativo_slug:
+                      type: string
+                      nullable: true
+          description: Lista de comunidades autónomas
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No autorizado
+  /api/v1.0/geo-politico/municipios/{codigoProvinciaOrSlug}/:
+    get:
+      operationId: listar municipios
+      description: |2
+
+        Obtiene la lista de municipios de una provincia.
+
+        El slug es el nombre de la provincia en minúsculas, sin espacios y sin caracteres especiales.
+
+        Por ejemplo, para la provincia de Las Palmas, el slug sería "las-palmas".
+      parameters:
+      - in: path
+        name: codigoProvinciaOrSlug
+        schema:
+          type: string
+        required: true
+      tags:
+      - geo-politico
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: string
+                    nombre:
+                      type: string
+                    nombre_slug:
+                      type: string
+                    nombre_alternativo:
+                      type: string
+                    nombre_alternativo_slug:
+                      type: string
+                      nullable: true
+          description: Lista de comunidades autónomas
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No encontrado
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No autorizado
+  /api/v1.0/geo-politico/provincias/{codigoComunidadOrSlug}/:
+    get:
+      operationId: listar provincias
+      description: "Obtiene la lista de provincias de una comunidad autónoma a partir\
+        \ de su código o nombre slug.\n\nEl slug es el nombre de la comunidad autónoma\
+        \ en minúsculas, sin espacios y sin caracteres especiales. \n\nPor ejemplo,\
+        \ para la comunidad autónoma de Castilla y León, el slug sería \"castilla-y-leon."
+      parameters:
+      - in: path
+        name: codigoComunidadOrSlug
+        schema:
+          type: string
+        required: true
+      tags:
+      - geo-politico
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    codigo:
+                      type: string
+                    nombre:
+                      type: string
+                    nombre_slug:
+                      type: string
+                    nombre_alternativo:
+                      type: string
+                    nombre_alternativo_slug:
+                      type: string
+                      nullable: true
+          description: Lista de comunidades autónomas
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No encontrado
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No autorizado
+  /api/v1.0/subastas-publicas/boe/comunidad/{comunidad}/:
+    get:
+      operationId: subastas por Comunidad Autónoma
+      description: Devuelve el lista de subastas en una comunidad autónoma
+      parameters:
+      - in: path
+        name: comunidad
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Número de página
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          default: 10
+        description: 'Tamaño de página. Valores permitidos: 1-25'
+      tags:
+      - subastas-publicas-boe
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        boe:
+                          type: string
+                        tipo:
+                          type: string
+                          enum:
+                          - seguridad-social
+                          - hacienda
+                          - notarial
+                          - judicial
+                          - desconocido
+                        tipo_fecha:
+                          type: string
+                          enum:
+                          - fijada
+                          - proxima-apertura
+                          - desconocido
+                        fecha_fin:
+                          type: string
+                          format: date-time
+                        fecha_inicio:
+                          type: string
+                          format: date-time
+                        fecha_publicacion:
+                          type: string
+                          format: date-time
+                        informacion_economica:
+                          type: object
+                          properties:
+                            total_cantidad_reclamada:
+                              type: number
+                            total_valor_subasta:
+                              type: number
+                            total_tasacion:
+                              type: number
+                            total_deposito:
+                              type: number
+                        ubicacion:
+                          type: object
+                          properties:
+                            comunidad_autonoma:
+                              type: string
+                            comunidad_autonoma_slug:
+                              type: string
+                            provincia:
+                              type: string
+                            provincia_slug:
+                              type: string
+                        total_lotes:
+                          type: integer
+                        total_inmuebles:
+                          type: integer
+          description: Detalle de la subasta
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No se encontró la subasta
+  /api/v1.0/subastas-publicas/boe/comunidad/{comunidad}/provincia/{provincia}/:
+    get:
+      operationId: subastas por Comunidad Autónoma y Provincia
+      description: Devuelve el lista de subastas en una comunidad autónoma y provincia
+      parameters:
+      - in: path
+        name: comunidad
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Número de página
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          default: 10
+        description: 'Tamaño de página. Valores permitidos: 1-25'
+      - in: path
+        name: provincia
+        schema:
+          type: string
+        required: true
+      tags:
+      - subastas-publicas-boe
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        boe:
+                          type: string
+                        tipo:
+                          type: string
+                          enum:
+                          - seguridad-social
+                          - hacienda
+                          - notarial
+                          - judicial
+                          - desconocido
+                        tipo_fecha:
+                          type: string
+                          enum:
+                          - fijada
+                          - proxima-apertura
+                          - desconocido
+                        fecha_fin:
+                          type: string
+                          format: date-time
+                        fecha_inicio:
+                          type: string
+                          format: date-time
+                        fecha_publicacion:
+                          type: string
+                          format: date-time
+                        informacion_economica:
+                          type: object
+                          properties:
+                            total_cantidad_reclamada:
+                              type: number
+                            total_valor_subasta:
+                              type: number
+                            total_tasacion:
+                              type: number
+                            total_deposito:
+                              type: number
+                        ubicacion:
+                          type: object
+                          properties:
+                            comunidad_autonoma:
+                              type: string
+                            comunidad_autonoma_slug:
+                              type: string
+                            provincia:
+                              type: string
+                            provincia_slug:
+                              type: string
+                        total_lotes:
+                          type: integer
+                        total_inmuebles:
+                          type: integer
+          description: Detalle de la subasta
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No se encontró la subasta
+  /api/v1.0/subastas-publicas/boe/detalle-bien/{id}/:
+    get:
+      operationId: detalle Bien
+      description: Devuelve el detalle de un bien a partir de su identificador
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - subastas-publicas-boe
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  cru:
+                    type:
+                    - string
+                    - 'null'
+                    description: Código Registral Único
+                  calle:
+                    type: string
+                  cargas:
+                    type:
+                    - boolean
+                    - 'null'
+                    description: Indica si el bien tiene cargas y de qué tipo
+                  idufir:
+                    type:
+                    - string
+                    - 'null'
+                    description: Identificador Único de Finca Registral
+                  titulo:
+                    type: string
+                  cabecera:
+                    type: string
+                  geo_data:
+                    type: object
+                    properties:
+                      lat:
+                        type: number
+                        description: Latitud
+                      lng:
+                        type: number
+                        description: Longitud
+                      geo_json:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                          geometry:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                              coordinates:
+                                type: array
+                                items:
+                                  type: number
+                                description: 'Longitud y latitud. Formato: [longitud,
+                                  latitud]'
+                          properties:
+                            type: object
+                            properties:
+                              calle:
+                                type: string
+                              numero:
+                                type: string
+                              municipio:
+                                type: string
+                              provincia:
+                                type: string
+                              codigo_postal:
+                                type: string
+                              codigo_municipio:
+                                type: string
+                              codigo_provincia:
+                                type: string
+                              comunidad_autonoma:
+                                type: string
+                              codigo_comunidad_autonoma:
+                                type: string
+                      google_maps:
+                        type: object
+                        properties:
+                          google_place_id:
+                            type: string
+                            description: Google Place ID
+                          formatted_address:
+                            type: string
+                            description: Dirección formateada por Google Maps
+                  visitable:
+                    type: string
+                    enum:
+                    - no-consta
+                    description: Indica si el bien es visitable o no
+                  descripcion:
+                    type: string
+                  cargas_numero:
+                    type: integer
+                    description: Número de cargas
+                  codigo_postal:
+                    type:
+                    - string
+                    - 'null'
+                  municipio_slug:
+                    type: string
+                  provincia_slug:
+                    type: string
+                  tipo_propiedad:
+                    type: string
+                    enum:
+                    - urbano
+                    - rustico
+                    - desconocido
+                  titulo_juridico:
+                    type:
+                    - string
+                    - 'null'
+                    description: Título jurídico del bien
+                  tipo_construccion:
+                    type: string
+                    enum:
+                    - casa
+                    - piso
+                    - nave
+                    - atico
+                    - local-comercial
+                    - comercio
+                    - garage
+                    - finca-parcela
+                    - trastero
+                    - duplex
+                    - almacen
+                    - solar
+                    - oficina
+                    - pajar
+                    - cuadra
+                    - otros
+                  vivienda_habitual:
+                    type:
+                    - boolean
+                    - 'null'
+                    description: Indica si el bien es vivienda habitual
+                  situacion_posesoria:
+                    type: string
+                    enum:
+                    - derecho-uso
+                    - derecho-permanencia
+                    - ocupante-desconocido
+                    - sin-ocupantes
+                    - no-consta
+                    - desconocido
+                    - 50-porciento
+                    description: Situación posesoria del bien
+                  referencia_catastral:
+                    type:
+                    - string
+                    - 'null'
+                    description: Referencia catastral del bien
+                  informacion_adicional:
+                    type:
+                    - string
+                    - 'null'
+                  inscripcion_registral:
+                    type:
+                    - string
+                    - 'null'
+                    description: Inscripción registral del bien
+                  comunidad_autonoma_slug:
+                    type: string
+                  comunidad_autonoma_nombre:
+                    type: string
+          description: Detalle del bien
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No se encontró la subasta
+  /api/v1.0/subastas-publicas/boe/detalle-subasta/{id}/:
+    get:
+      operationId: detalle Subasta
+      description: Devuelve el detalle de una subasta a partir de su identificador
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - subastas-publicas-boe
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  boe:
+                    type: string
+                  url:
+                    type: string
+                  tipo_fecha:
+                    type: string
+                    enum:
+                    - fijada
+                    - proxima-apertura
+                    - desconocido
+                  fecha_inicio:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  fecha_fin:
+                    type: string
+                    format: date-time
+                    nullable: true
+                  fecha_publicacion:
+                    type: string
+                    format: date-time
+                  tipo:
+                    type: string
+                    enum:
+                    - seguridad-social
+                    - hacienda
+                    - notarial
+                    - judicial
+                    - desconocido
+                  informacion_economica:
+                    type: object
+                    properties:
+                      cantidad_reclamada:
+                        type: number
+                      valor_subasta:
+                        type: number
+                      tasacion:
+                        type: number
+                      puja_minima:
+                        type: number
+                      tramos_pujas:
+                        type: array
+                        items:
+                          type: number
+                      deposito:
+                        type: number
+                  localizacion:
+                    type: object
+                    properties:
+                      comunidad_autonoma:
+                        type: string
+                      comunidad_autonoma_slug:
+                        type: string
+                      provincia:
+                        type: string
+                      provincia_slug:
+                        type: string
+                  gestora:
+                    type: object
+                    properties:
+                      codigo:
+                        type: string
+                      descripcion:
+                        type: string
+                      telefono:
+                        type: string
+                      fax:
+                        type: string
+                        nullable: true
+                      email:
+                        type: string
+                  acreedor:
+                    type: object
+                    properties:
+                      nif:
+                        type: string
+                      nombre:
+                        type: string
+                      direccion:
+                        type: string
+                      codigo_postal:
+                        type: string
+                      localidad:
+                        type: string
+                      provincia:
+                        type: string
+                      tipo_acreedor:
+                        type: string
+                        enum:
+                        - banco
+                        - otro
+                        - empresa
+                        - particular
+                        - desconocido
+                      banco:
+                        type: string
+                        nullable: true
+                        enum:
+                        - bbva
+                        - caixa
+                        - santander
+                        - bankia
+                        - sabadell
+                        - kutxabank
+                        - unicaja
+                        - ibercaja
+                        - bankinter
+                        - liberbank
+                        - march
+                        - pueyo
+                        - bankoa
+                        - alcala
+                        - openbank
+                        - activo_bank
+                        - cajasur
+                        - evo
+                        - wizink
+                        - arquia
+                        - self-bank
+                        - caminos
+                        - imaginbank
+                        - cajamar
+                        - caja-rural
+                        - laboral-kutxa
+                        - bantierra
+                        - cajasiete
+                        - ingenieros
+                        - quissona
+                        - ing
+                        - banca-civica
+                        - banif
+                        - ninguno
+                  lotes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bienes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              cru:
+                                type:
+                                - string
+                                - 'null'
+                                description: Código Registral Único
+                              calle:
+                                type: string
+                              cargas:
+                                type:
+                                - boolean
+                                - 'null'
+                                description: Indica si el bien tiene cargas y de qué
+                                  tipo
+                              idufir:
+                                type:
+                                - string
+                                - 'null'
+                                description: Identificador Único de Finca Registral
+                              titulo:
+                                type: string
+                              cabecera:
+                                type: string
+                              geo_data:
+                                type: object
+                                properties:
+                                  lat:
+                                    type: number
+                                    description: Latitud
+                                  lng:
+                                    type: number
+                                    description: Longitud
+                                  geo_json:
+                                    type: object
+                                    properties:
+                                      type:
+                                        type: string
+                                      geometry:
+                                        type: object
+                                        properties:
+                                          type:
+                                            type: string
+                                          coordinates:
+                                            type: array
+                                            items:
+                                              type: number
+                                            description: 'Longitud y latitud. Formato:
+                                              [longitud, latitud]'
+                                      properties:
+                                        type: object
+                                        properties:
+                                          calle:
+                                            type: string
+                                          numero:
+                                            type: string
+                                          municipio:
+                                            type: string
+                                          provincia:
+                                            type: string
+                                          codigo_postal:
+                                            type: string
+                                          codigo_municipio:
+                                            type: string
+                                          codigo_provincia:
+                                            type: string
+                                          comunidad_autonoma:
+                                            type: string
+                                          codigo_comunidad_autonoma:
+                                            type: string
+                                  google_maps:
+                                    type: object
+                                    properties:
+                                      google_place_id:
+                                        type: string
+                                        description: Google Place ID
+                                      formatted_address:
+                                        type: string
+                                        description: Dirección formateada por Google
+                                          Maps
+                              visitable:
+                                type: string
+                                enum:
+                                - no-consta
+                                description: Indica si el bien es visitable o no
+                              descripcion:
+                                type: string
+                              cargas_numero:
+                                type: integer
+                                description: Número de cargas
+                              codigo_postal:
+                                type:
+                                - string
+                                - 'null'
+                              municipio_slug:
+                                type: string
+                              provincia_slug:
+                                type: string
+                              tipo_propiedad:
+                                type: string
+                                enum:
+                                - urbano
+                                - rustico
+                                - desconocido
+                              titulo_juridico:
+                                type:
+                                - string
+                                - 'null'
+                                description: Título jurídico del bien
+                              tipo_construccion:
+                                type: string
+                                enum:
+                                - casa
+                                - piso
+                                - nave
+                                - atico
+                                - local-comercial
+                                - comercio
+                                - garage
+                                - finca-parcela
+                                - trastero
+                                - duplex
+                                - almacen
+                                - solar
+                                - oficina
+                                - pajar
+                                - cuadra
+                                - otros
+                              vivienda_habitual:
+                                type:
+                                - boolean
+                                - 'null'
+                                description: Indica si el bien es vivienda habitual
+                              situacion_posesoria:
+                                type: string
+                                enum:
+                                - derecho-uso
+                                - derecho-permanencia
+                                - ocupante-desconocido
+                                - sin-ocupantes
+                                - no-consta
+                                - desconocido
+                                - 50-porciento
+                                description: Situación posesoria del bien
+                              referencia_catastral:
+                                type:
+                                - string
+                                - 'null'
+                                description: Referencia catastral del bien
+                              informacion_adicional:
+                                type:
+                                - string
+                                - 'null'
+                              inscripcion_registral:
+                                type:
+                                - string
+                                - 'null'
+                                description: Inscripción registral del bien
+                              comunidad_autonoma_slug:
+                                type: string
+                              comunidad_autonoma_nombre:
+                                type: string
+                        id:
+                          type: integer
+                        nombre:
+                          type: string
+                        descripcion_lote:
+                          type: string
+                        tramos_pujas_tipo:
+                          type: string
+                          enum:
+                          - con-tramos
+                          - sin-tramos
+                          - no-consta
+                          - por-lote
+                          - desconocido
+                        tramos_pujas:
+                          type: number
+                        deposito:
+                          type: number
+                        deposito_tipo:
+                          type: string
+                          enum:
+                          - necesario
+                          - no-necesario
+                          - no-consta
+                          - por-lote
+                          - desconocido
+                        informacion_economica:
+                          type: object
+                          properties:
+                            total_cantidad_reclamada:
+                              type: number
+                            total_valor_subasta:
+                              type: number
+                            total_tasacion:
+                              type: number
+                            total_deposito:
+                              type: number
+          description: Detalle de la subasta
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No se encontró la subasta
+  /api/v1.0/subastas-publicas/boe/geo/:
+    post:
+      operationId: buscar subastas por geolocalización
+      description: Devuelve el lista de subastas en una comunidad autónoma y provincia
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Número de página
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          default: 10
+        description: 'Tamaño de página. Valores permitidos: 1-25'
+      tags:
+      - subastas-publicas-boe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GeoLocation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GeoLocation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GeoLocation'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        subasta:
+                          type: integer
+                          description: Id de la subasta a la que pertenece el bien
+                        bien:
+                          type: integer
+                          description: Id del bien
+                        lat:
+                          type: number
+                          description: Latitud en la que se encuentra el bien
+                        lon:
+                          type: number
+                          description: Longitud en la que se encuentra el bien
+                        distancia:
+                          type: integer
+                          description: Distancia en metros desde el punto de referencia
+          description: Detalle de la subasta
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: No se encontró la subasta
+  /api/v1.0/subastas-publicas/boe/hoy/:
+    get:
+      operationId: listar Subastas Hoy
+      description: |
+        Devuelve la lista de subastas de hoy para todas las provincias.
+
+        Cada entrada de la lista contiene el resumen de la subasta, así como de los lotes totales e inmuebles totales que contiene.
+
+        Soporta paginación. Puedes usar los parámetros `page` y `page_size` para cambiar la página y el tamaño de página.
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Número de página
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          default: 10
+        description: 'Tamaño de página. Valores permitidos: 1-25'
+      tags:
+      - subastas-publicas-boe
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  page_size:
+                    type: integer
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        boe:
+                          type: string
+                        tipo:
+                          type: string
+                          enum:
+                          - seguridad-social
+                          - hacienda
+                          - notarial
+                          - judicial
+                          - desconocido
+                        tipo_fecha:
+                          type: string
+                          enum:
+                          - fijada
+                          - proxima-apertura
+                          - desconocido
+                        fecha_fin:
+                          type: string
+                          format: date-time
+                        fecha_inicio:
+                          type: string
+                          format: date-time
+                        fecha_publicacion:
+                          type: string
+                          format: date-time
+                        informacion_economica:
+                          type: object
+                          properties:
+                            total_cantidad_reclamada:
+                              type: number
+                            total_valor_subasta:
+                              type: number
+                            total_tasacion:
+                              type: number
+                            total_deposito:
+                              type: number
+                        ubicacion:
+                          type: object
+                          properties:
+                            comunidad_autonoma:
+                              type: string
+                            comunidad_autonoma_slug:
+                              type: string
+                            provincia:
+                              type: string
+                            provincia_slug:
+                              type: string
+                        total_lotes:
+                          type: integer
+                        total_inmuebles:
+                          type: integer
+              examples:
+                EjemploDeRespuesta:
+                  value:
+                    total: 1
+                    page: 1
+                    page_size: 10
+                    results:
+                    - id: 1
+                      provincia: Madrid
+                      municipio: Madrid
+                      fecha_creacion: '2021-08-29T12:00:00Z'
+                      fecha_inicio: '2021-08-29T12:00:00Z'
+                      fecha_fin: '2021-08-29T12:00:00Z'
+                      lotes_totales: 1
+                      inmuebles_totales: 1
+                  summary: Ejemplo de respuesta
+          description: Lista de subastas de hoy para todas las provincias
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No se ha enviado el token de autenticación o el token es inválido
+  /api/v1.0/user/me/:
+    get:
+      operationId: información del usuario
+      description: "Obtiene la información del usuario autenticado, así como los servicios\
+        \ consumidos por el mismo.\n\n- **id**: Identificador del usuario.\n- **username**:\
+        \ Nombre de usuario.\n- **email**: Correo electrónico.\n- **first_name**:\
+        \ Nombre.\n- **last_name**: Apellidos.\n- **consumed_services**: Servicios\
+        \ consumidos por el usuario.\n    "
+      tags:
+      - users
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  username:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  consumed_services:
+                    type: object
+                    properties:
+                      geo_politico:
+                        type: integer
+                      subastas_boe:
+                        type: integer
+          description: Información del usuario
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+          description: No autorizado
+components:
+  schemas:
+    GeoLocation:
+      type: object
+      properties:
+        latitud:
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+          description: Latitud de la geolocalización
+        longitud:
+          type: number
+          format: double
+          maximum: 180
+          minimum: -180
+          description: Longitud de la geolocalización
+        radio:
+          type: integer
+          maximum: 20000
+          minimum: 0
+          default: 5000
+          description: Radio de búsqueda en metros
+      required:
+      - latitud
+      - longitud
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+servers:
+- url: https://open-data-spain.io
+  description: Open Data Spain API

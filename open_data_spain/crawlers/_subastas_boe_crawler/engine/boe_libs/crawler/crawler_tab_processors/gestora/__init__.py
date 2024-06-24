@@ -1,0 +1,1 @@
+from .procesar_gestora import procesar_tab_autoridad_gestora

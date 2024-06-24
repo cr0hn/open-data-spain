@@ -1,0 +1,54 @@
+version: '3.2'
+
+services:
+  agent:
+    image: portainer/agent:2.18.3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  portainer:
+    image: portainer/portainer-ce:2.18.3
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - agent_network
+      - traefik-public
+    deploy:
+      mode: replicated
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.portainer-dashboard.rule=Host(`portainer-f3ab242176de4923a5cf8c15a17fb641.open-data-spain.io`)
+        - traefik.http.services.portainer-dashboard.loadbalancer.server.port=9000
+        - traefik.http.routers.portainer-dashboard.entrypoints=http
+
+networks:
+  agent_network:
+    driver: overlay
+    attachable: true
+
+  traefik-public:
+    external: true
+
+volumes:
+  portainer_data:
+    driver: hetzner
+    driver_opts:
+      size: '10'
+      fstype: xfs

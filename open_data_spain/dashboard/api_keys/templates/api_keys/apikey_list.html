@@ -1,0 +1,124 @@
+{% extends 'dashboard/_base.html' %}
+{% block main %}
+    <div class="container-fluid">
+
+        <div class="d-flex align-items-baseline justify-content-between">
+
+            <!-- Title -->
+            <h1 class="h2">
+                API Keys
+            </h1>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard-home:home' %}">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">API Keys</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="alert text-bg-info-soft d-flex align-items-center mb-6" role="alert">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="32" width="32" class="me-3"><path d="M23.39,10.53,13.46.6a2.07,2.07,0,0,0-2.92,0L.61,10.54a2.06,2.06,0,0,0,0,2.92h0l9.93,9.92A2,2,0,0,0,12,24a2.07,2.07,0,0,0,1.47-.61l9.92-9.92A2.08,2.08,0,0,0,23.39,10.53ZM11,6.42a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h0a1.54,1.54,0,0,1-1.52-1.47A1.47,1.47,0,0,1,12,14.93h0A1.53,1.53,0,0,1,13.5,16.4,1.48,1.48,0,0,1,12.05,17.93Z" style="fill: currentColor"></path></svg>
+            </div>
+            <p class="mb-0">Una clave privada <b>no debe compartirse</b> con nadie. No incruste claves de API directamente en el código. No almacene claves de API en archivos dentro del árbol de código fuente de su aplicación. Si almacena claves de API en archivos, manténgalos fuera del árbol de código fuente de la aplicación para evitar que las claves acaben en el sistema de control de código fuente. Elimine las claves de API innecesarias.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    
+        
+
+        <div class="row">
+            <div class="col d-flex">
+
+                <!-- Card -->
+                <div class="card border-0 flex-fill w-100" data-list="{&quot;valueNames&quot;: [&quot;name&quot;, {&quot;name&quot;: &quot;key&quot;, &quot;attr&quot;: &quot;data-key&quot;}, {&quot;name&quot;: &quot;status&quot;, &quot;attr&quot;: &quot;data-status&quot;}, {&quot;name&quot;: &quot;created&quot;, &quot;attr&quot;: &quot;data-created&quot;}], &quot;page&quot;: 10}" id="keysTable">
+                    <div class="card-header border-0">
+
+                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-end">
+
+                            <!-- Title -->
+                            <h2 class="card-header-title h4 text-uppercase">
+                                API Keys activas
+                            </h2>
+
+                            <input class="form-control list-fuzzy-search mw-md-300px ms-md-auto mt-5 mt-md-0 mb-3 mb-md-0" type="search" placeholder="Search in keys">
+
+                            <!-- Button -->
+                            <a href="{% url 'dashboard-api-keys:apikey-create' %}" class="btn btn-primary ms-md-4" data-bs-title="Copiar asdf as" data-bs-toggle="tooltip">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="14" width="14" class="me-1"><path d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z" style="fill: currentColor"></path></svg>
+                                Crear API key
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover table-nowrap mb-0">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>
+                                    <a href="javascript: void(0);" class="text-muted list-sort" data-sort="name">
+                                        Name
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="javascript: void(0);" class="text-muted list-sort" data-sort="key">
+                                        API Key
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="javascript: void(0);" class="text-muted list-sort" data-sort="created">
+                                        Created
+                                    </a>
+                                </th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="list">
+
+                            {% for key in api_keys %}
+                                <tr>
+                                    <td class="name">{{ key.name }}</td>
+                                    <td class="key" data-key="{{ key.key }}">
+                                        <div class="d-flex">
+                                            <input type="hidden" id="key-{{ forloop.counter }}" value="{{ key.key }}">
+                                            <input type="password" class="form-control w-350px me-3" value="**************************************************">
+
+                                            <!-- Button -->
+                                            <button class="clipboard btn btn-link px-0" data-clipboard-target="#key-{{ forloop.counter }}" data-bs-toggle="tooltip" data-bs-title="Copiar">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="18" width="18"><g><path d="M13.4,4.73a.24.24,0,0,0,.2.26,1.09,1.09,0,0,1,.82,1.11V7.5a1.24,1.24,0,0,0,1.25,1.24h0A1.23,1.23,0,0,0,16.91,7.5V4a1.5,1.5,0,0,0-1.49-1.5H13.69a.29.29,0,0,0-.18.07.26.26,0,0,0-.07.18C13.44,3.2,13.44,4.22,13.4,4.73Z" style="fill: currentColor"></path><path d="M9,21.26A1.23,1.23,0,0,0,7.71,20H3.48a1.07,1.07,0,0,1-1-1.14V6.1A1.08,1.08,0,0,1,3.33,5a.25.25,0,0,0,.2-.26c0-.77,0-1.6,0-2a.25.25,0,0,0-.25-.25H1.5A1.5,1.5,0,0,0,0,4V21a1.5,1.5,0,0,0,1.49,1.5H7.71A1.24,1.24,0,0,0,9,21.26Z" style="fill: currentColor"></path><path d="M11.94,4.47v-2a.5.5,0,0,0-.5-.49h-.76a.26.26,0,0,1-.25-.22,2,2,0,0,0-3.95,0A.25.25,0,0,1,6.23,2H5.47A.49.49,0,0,0,5,2.48v2a.49.49,0,0,0,.49.5h6A.5.5,0,0,0,11.94,4.47Z" style="fill: currentColor"></path><path d="M19,17.27H15a.75.75,0,0,0,0,1.5h4a.75.75,0,0,0,0-1.5Z" style="fill: currentColor"></path><path d="M14.29,14.54a.76.76,0,0,0,.75.75h2.49a.75.75,0,0,0,0-1.5H15A.76.76,0,0,0,14.29,14.54Z" style="fill: currentColor"></path><path d="M23.5,13.46a2,2,0,0,0-.58-1.41l-1.41-1.4a2,2,0,0,0-1.41-.59H12.49a2,2,0,0,0-2,2V22a2,2,0,0,0,2,2h9a2,2,0,0,0,2-2Zm-11-.4a1,1,0,0,1,1-1h6.19a1,1,0,0,1,.71.29l.82.82a1,1,0,0,1,.29.7V21a1,1,0,0,1-1,1h-7a1,1,0,0,1-1-1Z" style="fill: currentColor"></path></g></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="created" data-created="1642550400">{{ key.created }}</td>
+                                    <td class="created" data-created="1642550400">
+                                        <a href="{% url 'dashboard-api-keys:apikey-delete' key.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div> <!-- / .table-responsive -->
+
+                    <div class="card-footer">
+                        <!-- Pagination -->
+                        <ul class="pagination justify-content-end list-pagination mb-0" style="display: flex;"><li class="page-item active"><a class="page page-link" href="javascript: void(0);" data-i="1" data-page="10">1</a></li><li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="2" data-page="10">2</a></li><li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="3" data-page="10">3</a></li></ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- / .row -->
+    </div>
+
+{% endblock %}
